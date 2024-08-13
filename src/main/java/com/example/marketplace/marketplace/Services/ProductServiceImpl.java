@@ -2,13 +2,14 @@ package com.example.marketplace.marketplace.Services;
 
 import com.example.marketplace.marketplace.Models.Product;
 import com.example.marketplace.marketplace.Repos.ProductRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class ProductServiceImpl implements ProductService {
-    //    @Autowired
+    @Autowired
     private ProductRepository productRepository;
 
 

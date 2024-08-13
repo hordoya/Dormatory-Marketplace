@@ -10,29 +10,22 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
 @RequestMapping
 public class ProductController {
     @Autowired
-    private ProductService productService;
-    //    public final ProductService productService;
-    private List<Product> products;
+    private final ProductService productService;
 
-    public ProductController() {
-//        this.productService = productService1;
-//        this.productService = productService;
-        this.products = new ArrayList<>();
-        this.products.add(new Product("Fan", "valo", 22.4));
+    public ProductController(ProductService productService) {
+        this.productService = productService;
     }
 
     @GetMapping("/product")
     public String findAll(Model model) {
-//        List<Product> products = this.productService.findAll();
-//        List<Product> products = this.productService.findAll();
-        model.addAttribute("products", this.products);
+        List<Product> products = this.productService.findAll();
+        model.addAttribute("products", products);
         return "productsHtml";
     }
 
@@ -44,9 +37,7 @@ public class ProductController {
 
     @PostMapping("/product/add")
     public String addProduct(@ModelAttribute("product") Product product) {
-//        List<Product> products = productService.findAll();
-
         this.productService.saveProduct(product); // Save the product using the service
-        return "redirect:/productsHtml";
+        return "redirect:/product";
     }
 }
