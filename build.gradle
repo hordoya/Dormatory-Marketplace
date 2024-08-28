@@ -39,6 +39,9 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     // Assuming you are using Thymeleaf for templates
     runtimeOnly 'com.h2database:h2'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'jakarta.validation:jakarta.validation-api:3.0.0'
+    implementation 'org.thymeleaf:thymeleaf-spring6:3.1.0.RELEASE' // Or the compatible version
 
 }
 
