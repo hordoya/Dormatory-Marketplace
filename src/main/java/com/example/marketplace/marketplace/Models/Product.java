@@ -1,9 +1,6 @@
 package com.example.marketplace.marketplace.Models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -23,6 +20,9 @@ public class Product {
     private Double price;
     private String picture;
     private String SellerName;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     public Product() {
 
@@ -35,4 +35,22 @@ public class Product {
         this.picture = picture;
         this.SellerName = sellerName;
     }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public User getUser() {
+        return this.user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+
 }

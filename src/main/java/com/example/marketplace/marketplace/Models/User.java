@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Setter
@@ -33,7 +34,41 @@ public class User {
     @Past(message = "Birthday must be in the past")
     private LocalDate birthday;
 
+    @OneToMany(mappedBy = "user")
+    private List<Product> products;
+
     private int matriculationNumber;
 
-    // Optionally include additional constructors, methods, etc.
+    public long getId() {
+        return this.id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getUserName() {
+        return this.userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getPassword() {
+        return this.password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getUsername() {
+        return this.userName;
+    }
+
+    public String getEmail() {
+        return this.email;
+    }
+
 }
