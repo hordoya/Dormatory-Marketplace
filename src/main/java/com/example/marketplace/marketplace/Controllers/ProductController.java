@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.List;
-
 @Controller
 @RequestMapping
 public class ProductController {
@@ -28,12 +26,12 @@ public class ProductController {
         this.customerService = customerService;
     }
 
-    @GetMapping("/")
-    public String findAll(Model model) {
-        List<Product> products = this.productService.findAll();
-        model.addAttribute("products", products);
-        return "productsHtml";
-    }
+//    @GetMapping("/")
+//    public String findAll(Model model) {
+//        List<Product> products = this.productService.findAll();
+//        model.addAttribute("products", products);
+//        return "productsHtml";
+//    }
 
     @GetMapping("/product/add")
     public String showAddProductForm(Model model) {
