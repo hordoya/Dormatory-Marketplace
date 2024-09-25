@@ -6,6 +6,7 @@ import java.util.List;
 
 public interface ProductService {
 
+    Object findProductById(Long id);
 
     void saveProduct(Product product);
 

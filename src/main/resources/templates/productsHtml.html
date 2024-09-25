@@ -51,6 +51,7 @@
             <th>Description</th>
             <th>Price</th>
             <th>Added By</th> <!-- Show who added the product -->
+            <th>Action</th> <!-- Add column for "Add to Cart" button -->
         </tr>
         </thead>
         <tbody>
@@ -61,6 +62,16 @@
             <td th:text="${product.description}"></td>
             <td th:text="${product.price}"></td>
             <td th:text="${product.user.userName}"></td> <!-- Display the username of the product owner -->
+            <td>
+                <form th:action="@{/addToCart/{productId}(productId=${product.id})}" method="post">
+                    <!-- Add input field for quantity -->
+                    <input type="number" name="quantity" value="1" min="1" class="form-control" required/>
+
+                    <button type="submit" class="btn btn-primary mt-2">Add to Cart</button>
+                </form>
+
+
+            </td>
         </tr>
         </tbody>
     </table>
