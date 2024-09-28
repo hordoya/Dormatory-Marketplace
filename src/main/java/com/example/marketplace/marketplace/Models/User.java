@@ -36,6 +36,8 @@ public class User {
 
     @OneToMany(mappedBy = "user")
     private List<Product> products;
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Cart cart;
 
     private int matriculationNumber;
 
@@ -71,4 +73,11 @@ public class User {
         return this.email;
     }
 
+    public Cart getCart() {
+        return this.cart;
+    }
+
+    public void setCart(Cart cart) {
+        this.cart = cart;
+    }
 }

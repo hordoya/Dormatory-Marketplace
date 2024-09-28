@@ -1,6 +1,7 @@
 package com.example.marketplace.marketplace.Services;
 
 import com.example.marketplace.marketplace.Models.CartItem;
+import com.example.marketplace.marketplace.Models.User;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,5 +17,8 @@ public interface CartService {
     void deleteAllCartItems();
 
     void clearCart();
+
+    List<CartItem> findCartItemsByUser(User user);
+
 
 }

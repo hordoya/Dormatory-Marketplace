@@ -44,6 +44,10 @@ public class Product {
         this.name = name;
     }
 
+    public void setSellerName(String sellerName) {
+        this.SellerName = sellerName;
+    }
+
     public User getUser() {
         return this.user;
     }

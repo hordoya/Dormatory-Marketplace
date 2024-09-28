@@ -30,5 +30,14 @@ public class Cart {
         Cart.cartItems = cartItems;
     }
 
+    public void addCartItem(CartItem cartItem) {
+        this.cartItems.add(cartItem);
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+
     // Add methods to manage cart items
 }

@@ -43,10 +43,14 @@ public class CartItem {
     }
 
     public Long getId() {
-        return id;
+        return this.id;
     }
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public void setCart(Cart cart) {
+        this.cart = cart;
     }
 }
