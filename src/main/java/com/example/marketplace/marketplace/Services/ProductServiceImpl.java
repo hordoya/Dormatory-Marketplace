@@ -27,4 +27,6 @@ public class ProductServiceImpl implements ProductService {
     public List<Product> findAll() {
         return this.productRepository.findAll(); // Implement this method
     }
+
+
 }

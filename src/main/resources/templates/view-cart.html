@@ -78,7 +78,7 @@ nav class="navbar navbar-expand-lg navbar-light bg-light">
     </table>
     <p>Total Price: €<span th:text="${totalAmount}"></span></p>
 
-    <form th:action="@{/order/create-order}" method="post">
+    <form th:action="@{/placeOrder}" method="post">
         <input type="submit" class="btn btn-primary" value="Add to Order"/>
     </form>
 </div>

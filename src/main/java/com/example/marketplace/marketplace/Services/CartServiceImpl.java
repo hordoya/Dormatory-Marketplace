@@ -34,6 +34,19 @@ public class CartServiceImpl implements CartService {
         return this.cartItemRepository.findByCartUser(user);
     }
 
+    public List<CartItem> findAllProductsInCartForUser(User user) {
+        return cartItemRepository.findByCartUser(user);
+    }
+
+    // Method to clear the cart for a specific user
+    public void clearCartForUser(User user) {
+        // Retrieve all cart items for the user
+        List<CartItem> cartItems = findAllProductsInCartForUser(user);
+        // Delete all the cart items for that user
+        cartItemRepository.deleteAll(cartItems);
+    }
+
+
     @Override
     public List<CartItem> findAllProductsInCart() {
         return this.cartItemRepository.findAll();

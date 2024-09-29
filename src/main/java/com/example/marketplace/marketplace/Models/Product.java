@@ -14,18 +14,16 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;  // Changed from String to Long
-
     private String name;
     private String description;
     private Double price;
     private String picture;
-    private String SellerName;
+    private String Seller;
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
     public Product() {
-
     }
 
     public Product(String name, String description, Double price, String picture, String sellerName) {
@@ -33,7 +31,7 @@ public class Product {
         this.description = description;
         this.price = price;
         this.picture = picture;
-        this.SellerName = sellerName;
+        this.Seller = sellerName;
     }
 
     public String getName() {
@@ -44,8 +42,12 @@ public class Product {
         this.name = name;
     }
 
-    public void setSellerName(String sellerName) {
-        this.SellerName = sellerName;
+    public void setSeller(User sellerName) {
+        this.user = sellerName;
+    }
+
+    public User getSeller() {
+        return this.user;
     }
 
     public User getUser() {

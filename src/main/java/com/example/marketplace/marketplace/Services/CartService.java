@@ -21,4 +21,7 @@ public interface CartService {
     List<CartItem> findCartItemsByUser(User user);
 
 
+    void clearCartForUser(User buyer);
+
+    List<CartItem> findAllProductsInCartForUser(User buyer);
 }
