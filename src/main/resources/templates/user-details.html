@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>User Details</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}"/>
+</head>
+<body>
+<div class="container">
+    <h1>User Details</h1>
+
+    <div>
+        <label><strong>ID:</strong></label>
+        <span th:text="${user.id}"></span>
+    </div>
+    <div>
+        <label><strong>Username:</strong></label>
+        <span th:text="${user.userName}"></span>
+    </div>
+    <div>
+        <label><strong>Email:</strong></label>
+        <span th:text="${user.email}"></span>
+    </div>
+    <div>
+        <label><strong>Birthday:</strong></label>
+        <span th:text="${user.birthday}"></span>
+    </div>
+    <div>
+        <label><strong>Matriculation Number:</strong></label>
+        <span th:text="${user.matriculationNumber}"></span>
+    </div>
+
+    <!-- Products Section -->
+    <h2>Products</h2>
+    <ul>
+        <li th:each="product : ${user.products}">
+            <span th:text="${product.name}"></span> - <span th:text="${product.price}"></span>
+        </li>
+    </ul>
+
+    <!-- Cart Section -->
+    <h2>Cart</h2>
+    <div th:if="${user.cart != null}">
+        <label><strong>Cart ID:</strong></label>
+        <span th:text="${user.cart.id}"></span>
+        <!-- You can extend this to show more cart details -->
+    </div>
+    <div th:if="${user.cart == null}">
+        <p>This user has no cart.</p>
+    </div>
+
+</div>
+</body>
+</html>

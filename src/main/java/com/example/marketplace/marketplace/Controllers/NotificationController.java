@@ -22,10 +22,10 @@ public class NotificationController {
     @GetMapping("/notifications")
     public String viewNotifications(Model model, Principal principal) {
         String username = principal.getName();
-        User seller = this.userService.findByUsername(username);  // Get the logged-in seller
+        User seller = this.userService.findByUsername(username);
         List<Notification> notifications = this.notificationService.getNotificationsForUser(seller);
 
         model.addAttribute("notifications", notifications);
-        return "view-notifications";  // Create this view to display notifications
+        return "view-notifications";
     }
 }

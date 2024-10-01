@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,7 +9,11 @@
 <h1>Your Notifications</h1>
 <ul>
     <th:block th:each="notification : ${notifications}">
-        <li th:text="${notification.message}"></li>
+        <li>
+            <span th:text="${notification.message}"></span>
+            <!-- Link to view user details -->
+            <a th:href="@{/user/{id}(id=${notification.recipient.id})}">View User Details</a>
+        </li>
     </th:block>
 </ul>
 </body>

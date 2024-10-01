@@ -61,16 +61,16 @@
             <td th:text="${product.name}"></td>
             <td th:text="${product.description}"></td>
             <td th:text="${product.price}"></td>
-            <td th:text="${product.user.userName}"></td> <!-- Display the username of the product owner -->
+            <!-- Display the username of the product owner as a link to view details -->
+            <td>
+                <a th:href="@{/user/{id}(id=${product.user.id})}" th:text="${product.user.userName}"></a>
+            </td>
             <td>
                 <form th:action="@{/addToCart/{productId}(productId=${product.id})}" method="post">
                     <!-- Add input field for quantity -->
                     <input type="number" name="quantity" value="1" min="1" class="form-control" required/>
-
                     <button type="submit" class="btn btn-primary mt-2">Add to Cart</button>
                 </form>
-
-
             </td>
         </tr>
         </tbody>

@@ -80,4 +80,16 @@ public class User {
     public void setCart(Cart cart) {
         this.cart = cart;
     }
+
+    public LocalDate getBirthday() {
+        return this.birthday;
+    }
+
+    public int getMatriculationNumber() {
+        return this.matriculationNumber;
+    }
+
+    public List<Product> getProducts() {
+        return this.products;
+    }
 }

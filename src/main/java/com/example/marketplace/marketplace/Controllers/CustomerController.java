@@ -2,6 +2,7 @@ package com.example.marketplace.marketplace.Controllers;
 
 import com.example.marketplace.marketplace.Models.Product;
 import com.example.marketplace.marketplace.Models.User;
+import com.example.marketplace.marketplace.Models.UserDTO;
 import com.example.marketplace.marketplace.Repos.ProductRepository;
 import com.example.marketplace.marketplace.Repos.UserRepository;
 import com.example.marketplace.marketplace.Services.CustomerService;
@@ -13,10 +14,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -113,4 +111,19 @@ public class CustomerController {
 
         return "productsHtml"; // This view will display the products
     }
+
+    @GetMapping("/user/{id}")
+    public String getUserById(@PathVariable Long id, Model model) {
+        User user = this.userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
+        UserDTO userDTO = this.userService.getUserDetails(user);
+        model.addAttribute("user", userDTO);
+        return "user-details";
+    }
+
+//    @GetMapping("/{id}")
+//    public String getUserDetails(@PathVariable Long id, Model model) {
+//        User user = this.userRepository.findById(id);
+//        model.addAttribute("user", user);
+//        return "user-details";  // user-details.html is the view that will display the user's details
+//    }
 }

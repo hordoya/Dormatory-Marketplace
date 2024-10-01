@@ -1,6 +1,7 @@
 package com.example.marketplace.marketplace.Services;
 
 import com.example.marketplace.marketplace.Models.User;
+import com.example.marketplace.marketplace.Models.UserDTO;
 import com.example.marketplace.marketplace.Repos.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -49,4 +50,10 @@ public class CustomerServiceImpl implements CustomerService, UserDetailsService 
 
         return userDetails; //if the user is found
     }
+
+    public UserDTO getUserDetails(User user) {
+        return new UserDTO(user);  // Convert User entity to UserDTO to exclude password
+    }
+
+
 }
