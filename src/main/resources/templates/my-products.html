@@ -23,7 +23,7 @@
                     <a class="nav-link" th:href="@{/product/add}">Add Product</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" th:href="@{/products}">All Products</a>
+                    <a class="nav-link" th:href="@{/cart}">Cart</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" th:href="@{/my-products}">My Products</a>
@@ -31,11 +31,14 @@
                 <li class="nav-item">
                     <a class="nav-link" th:href="@{/register}">Register</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/placeOrder}">Register</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/notifications}">Register</a>
+                </li>
                 <li class="nav-item" sec:authorize="isAuthenticated()">
                     <a class="nav-link" th:href="@{/logout}">Logout</a>
-                </li>
-                <li class="nav-item" sec:authorize="!isAuthenticated()">
-                    <a class="nav-link" th:href="@{/login}">Login</a>
                 </li>
             </ul>
         </div>
@@ -55,7 +58,6 @@
         </tr>
         </thead>
         <tbody>
-        <!-- Loop through products and display them -->
         <tr th:each="product : ${products}">
             <td th:text="${product.id}"></td>
             <td th:text="${product.name}"></td>
