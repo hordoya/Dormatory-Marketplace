@@ -38,6 +38,9 @@ public class User {
     private List<Product> products;
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Cart cart;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "address_id", referencedColumnName = "id")
+    private Address address;
 
     private int matriculationNumber;
 
@@ -77,6 +80,14 @@ public class User {
         return this.cart;
     }
 
+    public Address getAddress() {
+        return this.address;
+    }
+
+    public Address setAddress(Address address) {
+        return this.address = address;
+    }
+
     public void setCart(Cart cart) {
         this.cart = cart;
     }
@@ -92,4 +103,5 @@ public class User {
     public List<Product> getProducts() {
         return this.products;
     }
+
 }

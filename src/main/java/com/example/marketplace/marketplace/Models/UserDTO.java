@@ -16,6 +16,7 @@ public class UserDTO {
     private int matriculationNumber;
     private List<Product> products;
     private Cart cart;
+    private Address address;
 
     // Constructor
     public UserDTO(User user) {
@@ -26,6 +27,7 @@ public class UserDTO {
         this.matriculationNumber = user.getMatriculationNumber();
         this.products = user.getProducts();
         this.cart = user.getCart();
+        this.address = user.getAddress();
     }
 }
 
