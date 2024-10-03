@@ -2,17 +2,18 @@ package com.example.marketplace.marketplace.Controllers;
 
 import com.example.marketplace.marketplace.Models.Product;
 import com.example.marketplace.marketplace.Models.User;
+import com.example.marketplace.marketplace.Repos.ProductRepository;
 import com.example.marketplace.marketplace.Services.CustomerService;
+import com.example.marketplace.marketplace.Services.FileStorageService;
 import com.example.marketplace.marketplace.Services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping
@@ -20,18 +21,16 @@ public class ProductController {
     @Autowired
     private final ProductService productService;
     private final CustomerService customerService;
+    private final FileStorageService fileStorageService;
+    @Autowired
+    private final ProductRepository productRepository;
 
-    public ProductController(ProductService productService, CustomerService customerService) {
+    public ProductController(ProductService productService, CustomerService customerService, FileStorageService fileStorageService, ProductRepository productRepository) {
         this.productService = productService;
         this.customerService = customerService;
+        this.fileStorageService = fileStorageService;
+        this.productRepository = productRepository;
     }
-
-//    @GetMapping("/")
-//    public String findAll(Model model) {
-//        List<Product> products = this.productService.findAll();
-//        model.addAttribute("products", products);
-//        return "productsHtml";
-//    }
 
     @GetMapping("/product/add")
     public String showAddProductForm(Model model) {
@@ -39,18 +38,36 @@ public class ProductController {
         return "addProduct"; // Thymeleaf template for the form
     }
 
-//    @PostMapping("/product/add")
-//    public String addProduct(@ModelAttribute("product") Product product) {
-//        this.productService.saveProduct(product);
-//        return "redirect:/product";
-//    }
-
     @PostMapping("/product/add")
-    public String addProduct(@AuthenticationPrincipal UserDetails userDetails, @ModelAttribute("product") Product product) {
-        User user = this.customerService.findByUsername(userDetails.getUsername()); // Get the user from the database
-        product.setUser(user); // Set the user for the product
-        this.productService.saveProduct(product); // Save the product
-        return "redirect:/";
+    public String addProduct(@AuthenticationPrincipal UserDetails userDetails,
+                             @ModelAttribute("product") Product product,
+                             @RequestParam("photo") MultipartFile photo,
+                             RedirectAttributes redirectAttributes) {
 
+        User user = this.customerService.findByUsername(userDetails.getUsername());
+
+        // Handle file upload and save URL for one photo
+        if (!photo.isEmpty()) {
+            String fileUrl = this.fileStorageService.saveFile(photo); // Save file and get the URL
+            product.setPhotoUrl(fileUrl);
+        }
+
+        // Set the user in the product object
+        product.setUser(user);
+
+        // Save the product to the database
+        this.productService.saveProduct(product);
+
+        return "redirect:/";
+    }
+
+    @GetMapping("/product/{id}")
+    public String getProductDetails(@PathVariable Long id, Model model) {
+        Product product = this.productService.findProductById(id);
+        if (product == null) {
+            return "redirect:/"; // Handle product not found case
+        }
+        model.addAttribute("product", product);
+        return "product-details";
     }
 }

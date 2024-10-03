@@ -16,7 +16,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -32,7 +31,7 @@ public class CartController {
 
 
     @PostMapping("/addToCart/{productId}")
-    public String addToCart(@PathVariable Long productId, Model model, @RequestParam("quantity") int quantity, @AuthenticationPrincipal UserDetails userDetails) {
+    public String addToCart(@PathVariable Long productId, Model model, @AuthenticationPrincipal UserDetails userDetails) {
         String username = userDetails.getUsername();
         User user = this.userService.findByUsername(username);  // Get the logged-in user
 
@@ -49,7 +48,7 @@ public class CartController {
             // Create a new cart item and add it to the cart
             CartItem cartItem = new CartItem();
             cartItem.setProduct(product);
-            cartItem.setQuantity(quantity);
+
             cartItem.setCart(cart);  // Associate the cart item with the cart
 
             // Save the cart item
