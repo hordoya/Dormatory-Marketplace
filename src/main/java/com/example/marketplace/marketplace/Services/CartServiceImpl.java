@@ -35,15 +35,15 @@ public class CartServiceImpl implements CartService {
     }
 
     public List<CartItem> findAllProductsInCartForUser(User user) {
-        return cartItemRepository.findByCartUser(user);
+        return this.cartItemRepository.findByCartUser(user);
     }
 
     // Method to clear the cart for a specific user
     public void clearCartForUser(User user) {
         // Retrieve all cart items for the user
-        List<CartItem> cartItems = findAllProductsInCartForUser(user);
+        List<CartItem> cartItems = this.findAllProductsInCartForUser(user);
         // Delete all the cart items for that user
-        cartItemRepository.deleteAll(cartItems);
+        this.cartItemRepository.deleteAll(cartItems);
     }
 
 
@@ -70,6 +70,14 @@ public class CartServiceImpl implements CartService {
     @Override
     public void clearCart() {
         cartItems.clear();
+    }
+
+    public CartItem findCartItemByProductIdAndUser(Long productId, User user) {
+        return this.cartItemRepository.findByProductIdAndUser(productId, user);
+    }
+
+    public void removeFromCart(CartItem cartItem) {
+        this.cartItemRepository.delete(cartItem);
     }
 
 

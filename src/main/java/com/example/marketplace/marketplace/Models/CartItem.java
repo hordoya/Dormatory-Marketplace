@@ -16,6 +16,9 @@ public class CartItem {
     @ManyToOne
     @JoinColumn(name = "product_id")
     private Product product;
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     private int quantity;
 
@@ -52,5 +55,13 @@ public class CartItem {
 
     public void setCart(Cart cart) {
         this.cart = cart;
+    }
+
+    public User getUser() {
+        return this.user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

@@ -15,5 +15,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     //List<Product> findByUserNot(@Param("user") User user);
     List<Product> findAllByUserNot(User user);
 
+    List<Product> findAllByUserNotAndInCartFalse(User user);
+
 
 }

@@ -65,12 +65,9 @@
             <td th:text="${product.name}"></td>
             <td th:text="${product.description}"></td>
             <td th:text="${product.price}"></td>
-            <!-- Display the product photo if available, otherwise a placeholder -->
             <td>
-                <span th:text="${product.photoUrl}"></span>
                 <img th:src="@{'/uploads/' + ${product.photoUrl}}" alt="Product Image"/>
             </td>
-            <!-- Display the username of the product owner as a link to view details -->
             <td>
                 <a th:href="@{/user/{id}(id=${product.user.id})}" th:text="${product.user.userName}"></a>
             </td>

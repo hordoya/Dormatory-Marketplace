@@ -47,12 +47,31 @@ public class Product {
 
     }
 
+    private boolean inCart;
+
+    // Getter and setter for inCart
+    public boolean isInCart() {
+        return this.inCart;
+    }
+
+    public void setInCart(boolean inCart) {
+        this.inCart = inCart;
+    }
+
     public String getName() {
         return this.name;
     }
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Long getId() {
+        return this.id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public void setSeller(User sellerName) {

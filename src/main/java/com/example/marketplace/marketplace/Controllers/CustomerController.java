@@ -1,10 +1,12 @@
 package com.example.marketplace.marketplace.Controllers;
 
+import com.example.marketplace.marketplace.Models.CartItem;
 import com.example.marketplace.marketplace.Models.Product;
 import com.example.marketplace.marketplace.Models.User;
 import com.example.marketplace.marketplace.Models.UserDTO;
 import com.example.marketplace.marketplace.Repos.ProductRepository;
 import com.example.marketplace.marketplace.Repos.UserRepository;
+import com.example.marketplace.marketplace.Services.CartService;
 import com.example.marketplace.marketplace.Services.CustomerService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
@@ -25,6 +27,8 @@ public class CustomerController {
 
     @Autowired
     private CustomerService userService;
+    @Autowired
+    private CartService cartService;
     @Autowired
     private UserRepository userRepository;
     @Autowired
@@ -98,19 +102,28 @@ public class CustomerController {
 
     @GetMapping("/")
     public String getOtherProducts(Model model) {
-        // Get the currently logged-in user
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
-
-        // Find the logged-in user in the database
         User user = this.userRepository.findByUserName(username);
 
-        // Fetch products not added by the logged-in user
+        // Fetch all products not added by the logged-in user
         List<Product> products = this.productRepository.findAllByUserNot(user);
-        model.addAttribute("products", products);
 
+        // Fetch the products in the user's cart
+        List<CartItem> cartItems = this.cartService.findCartItemsByUser(user);
+        List<Long> cartProductIds = cartItems.stream()
+                .map(cartItem -> cartItem.getProduct().getId())
+                .toList(); // Get a list of product IDs in the cart
+
+        // Filter out products that are already in the cart
+        List<Product> availableProducts = products.stream()
+                .filter(product -> !cartProductIds.contains(product.getId()))
+                .toList();
+
+        model.addAttribute("products", availableProducts);
         return "productsHtml"; // This view will display the products
     }
+
 
     @GetMapping("/user/{id}")
     public String getUserById(@PathVariable Long id, Model model) {

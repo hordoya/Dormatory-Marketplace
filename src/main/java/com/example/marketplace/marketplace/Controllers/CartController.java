@@ -50,6 +50,8 @@ public class CartController {
             cartItem.setProduct(product);
 
             cartItem.setCart(cart);  // Associate the cart item with the cart
+            product.setInCart(true);
+            this.productService.saveProduct(product);
 
             // Save the cart item
             this.cartService.saveToCart(cartItem);
@@ -72,6 +74,24 @@ public class CartController {
 //        model.addAttribute("totalAmount", cart.calculateTotalAmount());
         return "view-cart";
     }
+
+
+    @PostMapping("/removeFromCart/{productId}")
+    public String removeFromCart(@PathVariable Long productId, Model model, @AuthenticationPrincipal UserDetails userDetails) {
+        String username = userDetails.getUsername();
+        User user = this.userService.findByUsername(username);
+
+        if (user != null) {
+            CartItem cartItem = this.cartService.findCartItemByProductIdAndUser(productId, user);
+            if (cartItem != null) {
+                this.cartService.removeFromCart(cartItem);
+
+                // Mark product as not in cart
+                Product product = cartItem.getProduct();
+                product.setInCart(false);
+                this.productService.saveProduct(product);
+            }
+        }
+        return "redirect:/cart";
+    }
 }
-
-
