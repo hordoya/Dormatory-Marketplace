@@ -5,8 +5,6 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.List;
-
 @Data
 @Setter
 @Getter
@@ -21,23 +19,32 @@ public class Product {
     private Double price;
     //    private String picture;
     private String Seller;
+    private Integer quantity;
+    private Double discount;
+    private String tags;
+    private Boolean available = true;
+    private String photoUrl;
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
-    //    @ElementCollection
-//    private List<String> photos = new ArrayList<>();
-    private String photoUrl;
 
 
     public Product() {
     }
 
-    public Product(String name, String description, Double price, String picture, String sellerName, List<String> photos) {
+    public Product(String name, String description, Double price, String picture, String sellerName, Integer quantity, Double discount, String photoUrl, String tags, Boolean available) {
         this.name = name;
         this.description = description;
         this.price = price;
 //        this.photos = photos;
         this.Seller = sellerName;
+        this.quantity = quantity;
+        this.discount = discount;
+        this.photoUrl = photoUrl;
+        this.available = available;
+
+
     }
 
     public String getName() {

@@ -48,15 +48,17 @@ public class ProductController {
 
         // Handle file upload and save URL for one photo
         if (!photo.isEmpty()) {
-            String fileUrl = this.fileStorageService.saveFile(photo); // Save file and get the URL
+            String fileUrl = this.fileStorageService.saveFile(photo);
             product.setPhotoUrl(fileUrl);
         }
 
-        // Set the user in the product object
+        // Set seller (current logged-in user)
         product.setUser(user);
 
-        // Save the product to the database
+        // Save product to the database
         this.productService.saveProduct(product);
+
+        redirectAttributes.addFlashAttribute("successMessage", "Product added successfully!");
 
         return "redirect:/";
     }
@@ -70,4 +72,5 @@ public class ProductController {
         model.addAttribute("product", product);
         return "product-details";
     }
+
 }
