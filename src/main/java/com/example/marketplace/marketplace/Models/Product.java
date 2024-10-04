@@ -37,7 +37,6 @@ public class Product {
         this.name = name;
         this.description = description;
         this.price = price;
-//        this.photos = photos;
         this.Seller = sellerName;
         this.quantity = quantity;
         this.discount = discount;
@@ -89,14 +88,6 @@ public class Product {
     public void setUser(User user) {
         this.user = user;
     }
-
-//    public List<String> getPhotos() {
-//        return this.photos;
-//    }
-//
-//    public void setPhotos(List<String> photos) {
-//        this.photos = photos;
-//    }
 
     public String getPhotoUrl() {
         return this.photoUrl;

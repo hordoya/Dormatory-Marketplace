@@ -37,23 +37,21 @@ public class CartController {
 
         Product product = (Product) this.productService.findProductById(productId);
         if (product != null && user != null) {
-            // Get the user's cart or create one if not existing
+
             Cart cart = user.getCart();
             if (cart == null) {
                 cart = new Cart();
-                cart.setUser(user);  // Associate the cart with the user
+                cart.setUser(user);
                 user.setCart(cart);
             }
-
-            // Create a new cart item and add it to the cart
             CartItem cartItem = new CartItem();
             cartItem.setProduct(product);
 
-            cartItem.setCart(cart);  // Associate the cart item with the cart
+            cartItem.setCart(cart);
             product.setInCart(true);
             this.productService.saveProduct(product);
 
-            // Save the cart item
+
             this.cartService.saveToCart(cartItem);
         }
         return "redirect:/";
@@ -71,7 +69,6 @@ public class CartController {
         cart.setCartItems(cartItems);
         model.addAttribute("cartItems", cartItems);
         model.addAttribute("cart", cart);
-//        model.addAttribute("totalAmount", cart.calculateTotalAmount());
         return "view-cart";
     }
 

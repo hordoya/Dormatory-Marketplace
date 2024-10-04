@@ -27,5 +27,5 @@ public interface CartService {
 
     CartItem findCartItemByProductIdAndUser(Long productId, User user);
 
-    void removeFromCart(CartItem cartItem);
+    void removeFromCart(CartItem cartItem);// new added
 }

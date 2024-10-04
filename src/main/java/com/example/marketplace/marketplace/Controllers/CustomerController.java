@@ -45,7 +45,7 @@ public class CustomerController {
     public String registerUser(@Valid @ModelAttribute("user") User user, BindingResult result, Model model) {
         if (result.hasErrors()) {
             result.getAllErrors().forEach(error -> {
-                System.out.println(error.getDefaultMessage()); // Log validation errors
+                System.out.println(error.getDefaultMessage());
             });
             return "register";
         }
@@ -63,27 +63,9 @@ public class CustomerController {
 
     @GetMapping("/logout")
     public String handleLogout(HttpServletRequest request) {
-//        this.cartService.clearCart();
-//        this.cartService.deleteAllCartItems();
         request.getSession().invalidate();
         return "redirect:/login?logout";
     }
-
-//    @GetMapping("/my-products")
-//    public String getUserProducts(Model model) {
-//        // Get the logged-in user
-//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//        String username = authentication.getName();
-//
-//        // Find user by username
-//        User user = this.userRepository.findByUserName(username);
-//
-//        // Fetch products by user
-//        List<Product> products = this.productRepository.findByUser(user);
-//        model.addAttribute("products", products);
-//
-//        return "my-products";
-//    }
 
     @GetMapping("/my-products")
     public String getUserProducts(Model model) {
@@ -124,7 +106,6 @@ public class CustomerController {
         return "productsHtml"; // This view will display the products
     }
 
-
     @GetMapping("/user/{id}")
     public String getUserById(@PathVariable Long id, Model model) {
         User user = this.userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
@@ -132,11 +113,4 @@ public class CustomerController {
         model.addAttribute("user", userDTO);
         return "user-details";
     }
-
-//    @GetMapping("/{id}")
-//    public String getUserDetails(@PathVariable Long id, Model model) {
-//        User user = this.userRepository.findById(id);
-//        model.addAttribute("user", user);
-//        return "user-details";  // user-details.html is the view that will display the user's details
-//    }
 }

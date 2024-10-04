@@ -35,7 +35,7 @@ public class ProductController {
     @GetMapping("/product/add")
     public String showAddProductForm(Model model) {
         model.addAttribute("product", new Product());
-        return "addProduct"; // Thymeleaf template for the form
+        return "addProduct";
     }
 
     @PostMapping("/product/add")
@@ -45,21 +45,13 @@ public class ProductController {
                              RedirectAttributes redirectAttributes) {
 
         User user = this.customerService.findByUsername(userDetails.getUsername());
-
-        // Handle file upload and save URL for one photo
         if (!photo.isEmpty()) {
             String fileUrl = this.fileStorageService.saveFile(photo);
             product.setPhotoUrl(fileUrl);
         }
-
-        // Set seller (current logged-in user)
         product.setUser(user);
-
-        // Save product to the database
         this.productService.saveProduct(product);
-
         redirectAttributes.addFlashAttribute("successMessage", "Product added successfully!");
-
         return "redirect:/";
     }
 
