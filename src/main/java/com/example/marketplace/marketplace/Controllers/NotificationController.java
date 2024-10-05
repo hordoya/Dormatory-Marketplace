@@ -19,13 +19,33 @@ public class NotificationController {
     @Autowired
     private CustomerService userService;
 
+    //    @GetMapping("/notifications")
+//    public String viewNotifications(Model model, Principal principal) {
+//        String username = principal.getName();
+//        User seller = this.userService.findByUsername(username);
+//        List<Notification> notifications = this.notificationService.getNotificationsForUser(seller);
+//
+//        model.addAttribute("notifications", notifications);
+//        return "view-notifications";
+//    }
     @GetMapping("/notifications")
     public String viewNotifications(Model model, Principal principal) {
         String username = principal.getName();
         User seller = this.userService.findByUsername(username);
         List<Notification> notifications = this.notificationService.getNotificationsForUser(seller);
 
+        // Debug: Log notifications
+        notifications.forEach(notification -> {
+            System.out.println("Notification ID: " + notification.getId());
+            System.out.println("Transaction: " + notification.getTransaction());
+            if (notification.getTransaction() != null) {
+                System.out.println("Seller Confirmed: " + notification.getTransaction().getSellerConfirmed());
+                System.out.println("Buyer Confirmed: " + notification.getTransaction().getBuyerConfirmed());
+            }
+        });
+
         model.addAttribute("notifications", notifications);
         return "view-notifications";
     }
+
 }

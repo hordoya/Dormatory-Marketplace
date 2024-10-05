@@ -15,6 +15,20 @@ public class Notification {
 
     private String message;
     private boolean isRead;
+    @OneToOne
+    @JoinColumn(name = "transaction_id")
+
+    private Transaction transaction;
+
+    // Getters and Setters
+    public Transaction getTransaction() {
+        return this.transaction;
+    }
+
+    public void setTransaction(Transaction transaction) {
+        this.transaction = transaction;
+    }
+
 
     // Setters and Getters
     public void setRecipient(User recipient) {

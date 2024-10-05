@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Transaction Details</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+    <h2>Transaction Details</h2>
+
+    <!-- Display the product details -->
+    <div>
+        <h3>Product: <span th:text="${transaction.product.name}"></span></h3>
+        <p>Description: <span th:text="${transaction.product.description}"></span></p>
+        <p>Price: <span th:text="${transaction.product.price}"></span></p>
+    </div>
+
+    <!-- Seller confirmation button -->
+    <div>
+        <h4>Seller: <span th:text="${transaction.seller.userName}"></span></h4>
+        <form th:action="@{/transaction/{id}/confirmSeller(id=${transaction.id})}" method="post">
+            <button type="submit" class="btn btn-primary" th:disabled="${transaction.sellerConfirmed}">Confirm Sale
+            </button>
+        </form>
+    </div>
+
+    <!-- Buyer confirmation button -->
+    <div>
+        <h4>Buyer: <span th:text="${transaction.buyer.userName}"></span></h4>
+        <form th:action="@{/transaction/{id}/confirmBuyer(id=${transaction.id})}" method="post">
+            <button type="submit" class="btn btn-primary" th:disabled="${transaction.buyerConfirmed}">Confirm Receipt
+            </button>
+        </form>
+    </div>
+
+    <!-- Status of transaction -->
+    <div>
+        <h5>Status:</h5>
+        <p th:if="${transaction.sellerConfirmed && transaction.buyerConfirmed}">Transaction Completed</p>
+        <p th:if="${!transaction.sellerConfirmed || !transaction.buyerConfirmed}">Transaction Pending</p>
+    </div>
+</div>
+</body>
+</html>

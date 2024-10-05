@@ -49,11 +49,31 @@
         <th:block th:each="notification : ${notifications}">
             <li class="list-group-item">
                 <span th:text="${notification.message}"></span>
-                <!-- Link to view user details -->
+
+                <!-- Seller confirmation button -->
+                <th:block
+                        th:if="${notification.transaction != null and notification.transaction.sellerConfirmed == false}">
+                    <form th:action="@{/transaction/{id}/confirmSeller(id=${notification.transaction.id})}"
+                          method="post">
+                        <button type="submit" class="btn btn-success btn-sm ml-3">Seller Confirm</button>
+                    </form>
+                </th:block>
+
+                <!-- Buyer confirmation button -->
+                <th:block
+                        th:if="${notification.transaction != null and notification.transaction.buyerConfirmed == false}">
+                    <form th:action="@{/transaction/{id}/confirmBuyer(id=${notification.transaction.id})}"
+                          method="post">
+                        <button type="submit" class="btn btn-success btn-sm ml-3">Buyer Confirm</button>
+                    </form>
+                </th:block>
+
+                <!-- View user details (optional) -->
                 <a th:href="@{/user/{id}(id=${notification.recipient.id})}" class="btn btn-primary btn-sm ml-3">View
                     User Details</a>
             </li>
         </th:block>
+
     </ul>
 </div>
 
