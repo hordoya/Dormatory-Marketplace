@@ -50,22 +50,30 @@
             <li class="list-group-item">
                 <span th:text="${notification.message}"></span>
 
-                <!-- Seller confirmation button -->
-                <th:block
-                        th:if="${notification.transaction != null and notification.transaction.sellerConfirmed == false}">
-                    <form th:action="@{/transaction/{id}/confirmSeller(id=${notification.transaction.id})}"
-                          method="post">
-                        <button type="submit" class="btn btn-success btn-sm ml-3">Seller Confirm</button>
-                    </form>
-                </th:block>
+                <!-- Check if transaction and its fields are not null before accessing them -->
+                <th:block th:if="${notification.transaction != null}">
+                    <!-- Seller confirmation button -->
+                    <th:block th:if="${notification.transaction.sellerConfirmed != null
+                                     and notification.transaction.sellerConfirmed == false
+                                     and notification.transaction.product != null
+                                     and notification.transaction.product.seller != null
+                                     and notification.transaction.product.seller.userName == #authentication.name}">
+                        <form th:action="@{/transaction/{id}/confirmSeller(id=${notification.transaction.id})}"
+                              method="post">
+                            <button type="submit" class="btn btn-success btn-sm ml-3">Seller Confirm</button>
+                        </form>
+                    </th:block>
 
-                <!-- Buyer confirmation button -->
-                <th:block
-                        th:if="${notification.transaction != null and notification.transaction.buyerConfirmed == false}">
-                    <form th:action="@{/transaction/{id}/confirmBuyer(id=${notification.transaction.id})}"
-                          method="post">
-                        <button type="submit" class="btn btn-success btn-sm ml-3">Buyer Confirm</button>
-                    </form>
+                    <!-- Buyer confirmation button -->
+                    <th:block th:if="${notification.transaction.buyerConfirmed != null
+                                     and notification.transaction.buyerConfirmed == false
+                                     and notification.transaction.buyer != null
+                                     and notification.transaction.buyer.userName == #authentication.name}">
+                        <form th:action="@{/transaction/{id}/confirmBuyer(id=${notification.transaction.id})}"
+                              method="post">
+                            <button type="submit" class="btn btn-success btn-sm ml-3">Buyer Confirm</button>
+                        </form>
+                    </th:block>
                 </th:block>
 
                 <!-- View user details (optional) -->
@@ -73,7 +81,6 @@
                     User Details</a>
             </li>
         </th:block>
-
     </ul>
 </div>
 

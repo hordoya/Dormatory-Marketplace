@@ -33,5 +33,9 @@ public class NotificationServiceImpl implements NotificationService {
         return this.notificationRepository.findByRecipient(user);
     }
 
+    public void saveNotification(Notification notification) {
+        this.notificationRepository.save(notification);
+    }
+
 
 }

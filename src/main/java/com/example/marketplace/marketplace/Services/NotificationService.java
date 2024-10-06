@@ -10,4 +10,6 @@ public interface NotificationService {
     public void sendNotification(User recipient, String message, Transaction transaction);
 
     public List<Notification> getNotificationsForUser(User user);
+
+    public void saveNotification(Notification notification);
 }

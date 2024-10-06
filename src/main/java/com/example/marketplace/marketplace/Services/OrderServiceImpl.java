@@ -21,7 +21,6 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public void placeOrder(User buyer, List<CartItem> cartItems) {
         Order order = new Order();
-        Transaction transaction = new Transaction();
 
         order.setBuyer(buyer);
         order.setOrderDate(LocalDateTime.now());
@@ -34,10 +33,18 @@ public class OrderServiceImpl implements OrderService {
             orderItem.setQuantity(cartItem.getQuantity());
             orderItems.add(orderItem);
 
+            // Create a new transaction for each notification
+            Transaction sellerTransaction = new Transaction();
+            Transaction buyerTransaction = new Transaction();
+
             // Send notification to the seller
             User seller = cartItem.getProduct().getSeller();
-            String message = "Your product '" + cartItem.getProduct().getName() + "' has been ordered.";
-            this.notificationService.sendNotification(seller, message, transaction);
+            String sellerMessage = "Your product '" + cartItem.getProduct().getName() + "' has been ordered.";
+            this.notificationService.sendNotification(seller, sellerMessage, sellerTransaction);
+
+            // Send notification to the buyer
+            String buyerMessage = "You have successfully ordered the product '" + cartItem.getProduct().getName() + "'.";
+            this.notificationService.sendNotification(buyer, buyerMessage, buyerTransaction);
         }
 
         order.setOrderItems(orderItems);

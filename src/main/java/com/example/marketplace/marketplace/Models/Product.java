@@ -24,6 +24,7 @@ public class Product {
     private String tags;
     private Boolean available = true;
     private String photoUrl;
+    private String buyer;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -33,7 +34,7 @@ public class Product {
     public Product() {
     }
 
-    public Product(String name, String description, Double price, String picture, String sellerName, Integer quantity, Double discount, String photoUrl, String tags, Boolean available) {
+    public Product(String buyer, String name, String description, Double price, String picture, String sellerName, Integer quantity, Double discount, String photoUrl, String tags, Boolean available) {
         this.name = name;
         this.description = description;
         this.price = price;
@@ -42,7 +43,7 @@ public class Product {
         this.discount = discount;
         this.photoUrl = photoUrl;
         this.available = available;
-
+        this.buyer = buyer;
 
     }
 
@@ -71,6 +72,14 @@ public class Product {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public void setBuyer(User buyerName) {
+        this.user = buyerName;
+    }
+
+    public User getBuyer() {
+        return this.user;
     }
 
     public void setSeller(User sellerName) {
