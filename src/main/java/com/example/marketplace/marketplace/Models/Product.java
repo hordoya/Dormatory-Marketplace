@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Data
 @Setter
 @Getter
@@ -25,11 +27,15 @@ public class Product {
     private Boolean available = true;
     private String photoUrl;
     private String buyer;
+    private boolean deleted = false;
+
 
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
+    @OneToMany(mappedBy = "product", cascade = CascadeType.REMOVE)
+    private List<CartItem> cartItems;
 
     public Product() {
     }
@@ -106,5 +112,12 @@ public class Product {
         this.photoUrl = photoUrl;
     }
 
+    public boolean isDeleted() {
+        return this.deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
+    }
 
 }

@@ -58,8 +58,7 @@
         </tr>
         </thead>
         <tbody>
-
-        <tr th:each="product : ${products}">
+        <tr th:each="product : ${products}" th:if="${!product.inCart}">
             <td th:text="${product.id}"></td>
             <td th:text="${product.name}"></td>
             <td th:text="${product.description}"></td>
@@ -77,6 +76,7 @@
             </td>
         </tr>
         </tbody>
+
     </table>
 </div>
 
