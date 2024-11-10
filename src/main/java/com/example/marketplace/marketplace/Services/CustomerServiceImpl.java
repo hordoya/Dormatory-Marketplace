@@ -10,6 +10,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class CustomerServiceImpl implements CustomerService, UserDetailsService {
     @Autowired
@@ -53,6 +55,11 @@ public class CustomerServiceImpl implements CustomerService, UserDetailsService 
 
     public UserDTO getUserDetails(User user) {
         return new UserDTO(user);  // Convert User entity to UserDTO to exclude password
+    }
+
+    @Override
+    public List<User> findAll() {
+        return this.userRepository.findAll();
     }
 
 

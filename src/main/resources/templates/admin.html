@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { padding: 10px; text-align: left; border: 1px solid #ddd; }
+        th { background-color: #f4f4f4; }
+        h1 { color: #333; }
+    </style>
+</head>
+<body>
+
+<h1>Admin Dashboard</h1>
+<h2>All Users</h2>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Username</th>
+        <th>Email</th>
+        <th>Birthday</th>
+        <th>Role</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- Iterate through the users list and display each user's details -->
+    <tr th:each="user : ${users}">
+        <td th:text="${user.id}"></td>
+        <td th:text="${user.userName}"></td>
+        <td th:text="${user.email}"></td>
+        <td th:text="${user.birthday}"></td>
+        <td th:text="${user.authorities[0].authority}"></td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

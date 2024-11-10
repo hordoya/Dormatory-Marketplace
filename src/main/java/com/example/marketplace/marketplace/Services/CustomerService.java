@@ -3,6 +3,8 @@ package com.example.marketplace.marketplace.Services;
 import com.example.marketplace.marketplace.Models.User;
 import com.example.marketplace.marketplace.Models.UserDTO;
 
+import java.util.List;
+
 public interface CustomerService {
     void saveUser(User user);
 
@@ -11,4 +13,5 @@ public interface CustomerService {
     UserDTO getUserDetails(User user);
 
 
+    List<User> findAll();
 }

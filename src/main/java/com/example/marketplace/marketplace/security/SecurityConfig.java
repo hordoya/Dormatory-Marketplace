@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
@@ -29,16 +30,34 @@ public class SecurityConfig implements WebMvcConfigurer {
 
         http
                 .authorizeRequests()
+                .requestMatchers(this.permitAllURL).hasRole("USER")
                 .requestMatchers("/h2-console/**").permitAll()
                 .requestMatchers("/error").permitAll()
                 .requestMatchers("/login").permitAll()
                 .requestMatchers("/register").permitAll()
+                .requestMatchers("/admin/**").hasRole("ADMIN")
+
+
                 .anyRequest().authenticated()
                 .and()
                 .formLogin((form) -> form
-                        .loginPage("/login")
-                        .defaultSuccessUrl("/", true)
-                        .permitAll()
+                                .loginPage("/login")
+                                .failureHandler(this.customAuthenticationFailureHandler())
+//                        .defaultSuccessUrl("/", true)
+                                .successHandler((request, response, authentication) -> {
+                                    // Determine the role and redirect accordingly
+                                    String username = authentication.getName();
+
+                                    // Redirect based on username or role
+                                    if ("admin".equals(username) || authentication.getAuthorities().stream()
+                                            .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_ADMIN"))) {
+                                        response.sendRedirect("/admin/dashboard"); // Admin dashboard redirect
+                                    } else {
+                                        response.sendRedirect("/"); // Standard user dashboard
+                                    }
+
+                                })
+                                .permitAll()
 
                 )
                 .csrf(request -> request.ignoringRequestMatchers(PathRequest.toH2Console()))
@@ -51,6 +70,10 @@ public class SecurityConfig implements WebMvcConfigurer {
                 );
         return http.build();
 
+    }
+
+    private AuthenticationFailureHandler customAuthenticationFailureHandler() {
+        return new CustomAuthenticationFailureHandler();
     }
 
     @Bean
