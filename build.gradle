@@ -1,8 +1,10 @@
 plugins {
     id 'java'
-    id 'org.springframework.boot' version '3.4.0-M1'
-    id 'io.spring.dependency-management' version '1.1.6'
+    id 'org.springframework.boot' version '3.2.0'
+    id 'io.spring.dependency-management' version '1.1.4'
+//	id 'com.google.cloud.tools.appengine' version '2.4.5'
 }
+
 
 group = 'com.example.marketplace'
 version = '0.0.1-SNAPSHOT'
@@ -18,35 +20,86 @@ configurations {
 }
 
 repositories {
+    jcenter()
     mavenCentral()
-    maven { url 'https://repo.spring.io/milestone' }
 }
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-
+    // html templating engine
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
-
+    // basic starter including tomcat as an embedded web server
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    // compile time only - generating setters, getters, other utility methods
     compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
-    runtimeOnly 'com.h2database:h2'
     annotationProcessor 'org.projectlombok:lombok'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation 'org.springframework.security:spring-security-test'
-    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
-    // Assuming you are using Thymeleaf for templates
-    runtimeOnly 'com.h2database:h2'
+    testImplementation('org.springframework.boot:spring-boot-starter-test') {
+        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+    }
+
+    // added manually
     implementation 'org.springframework.boot:spring-boot-starter-validation'
-    implementation 'jakarta.validation:jakarta.validation-api:3.0.0'
-    implementation 'org.thymeleaf:thymeleaf-spring6:3.1.0.RELEASE' // Or the compatible version
+
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    //new addition
+
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+//	implementation 'org.postgresql:postgresql'
+    implementation 'jakarta.validation:jakarta.validation-api:3.0.0'
 
 
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    // basic starter including tomcat as an embedded web server
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    // compile time only - generating setters, getters, other utility methods
+    compileOnly 'org.projectlombok:lombok'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    annotationProcessor 'org.projectlombok:lombok'
+    testImplementation('org.springframework.boot:spring-boot-starter-test') {
+        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+    }
+
+    // added manually
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'com.h2database:h2'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+//	implementation 'com.google.cloud:spring-cloud-gcp-starter:5.0.0'
+//	implementation 'com.google.appengine:appengine-api-1.0-sdk:+'
+//	implementation 'com.google.appengine:appengine:+'
+//	implementation 'com.google.cloud:spring-cloud-gcp-dependencies:4.5.1'
+//	implementation 'com.google.cloud:spring-cloud-gcp-starter-sql-postgresql:4.5.1'
+//	implementation 'com.google.cloud:google-cloud-secretmanager:2.30.0'
 }
 
-tasks.named('test') {
+test {
     useJUnitPlatform()
 }
+
+//appengine{
+//	stage {
+//		artifact=bootJar.archiveFile.get();
+//	}
+//	deploy {
+//		version="1"
+//		projectId="group-project-412615"
+//		stopPreviousVersion=true;
+//		promote=true;
+//	}
+//}
+//task addSecretsyaml(type: Copy)
+//{
+//	println("${project.projectDir}")
+//	from file("${project.projectDir}/src/main/appengine/secrets.yaml")
+//	into "${buildDir}/staged-app/"
+//}
+//tasks.named("appengineStage"){
+//	finalizedBy("addSecretsyaml")
+//}
+

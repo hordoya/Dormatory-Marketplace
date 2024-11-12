@@ -11,6 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CustomerServiceImpl implements CustomerService, UserDetailsService {
@@ -41,13 +42,13 @@ public class CustomerServiceImpl implements CustomerService, UserDetailsService 
         if (user == null) {
             throw new UsernameNotFoundException("User not found with username: " + username); //throws UsernameNotFoundException if no user found
         }
-        //String role = user.getUserName().contains("admin") ? "ADMIN" : "USER";
+        String role = user.getUserName().contains("admin") ? "ADMIN" : "USER";
 
         UserDetails userDetails = org.springframework.security.core.userdetails.User
                 .withUsername(user.getUserName())
                 .password(user.getPassword())
                 //.passwordEncoder(password -> passwordEncoder().encode(password))
-
+                .roles(role)
                 .build();
 
         return userDetails; //if the user is found
@@ -60,6 +61,20 @@ public class CustomerServiceImpl implements CustomerService, UserDetailsService 
     @Override
     public List<User> findAll() {
         return this.userRepository.findAll();
+    }
+
+    @Override
+    public User findById(Long userId) {
+        // Use the repository to fetch the user by ID
+        Optional<User> userOptional = this.userRepository.findById(userId);
+
+        // Return the user if present, otherwise return null or throw an exception
+        return userOptional.orElse(null);  // You can also throw an exception if not found
+    }
+
+    @Override
+    public void deleteUserById(Long id) {
+        this.userRepository.deleteById(id);
     }
 
 
