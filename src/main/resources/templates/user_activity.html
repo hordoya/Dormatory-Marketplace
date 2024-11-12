@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>User Activity - Products Bought & Sold</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { padding: 10px; text-align: left; border: 1px solid #ddd; }
+        th { background-color: #f4f4f4; }
+        h1 { color: #333; }
+    </style>
+</head>
+<body>
+
+<h1>User Activity</h1>
+<h2 th:text="'Activity for ' + ${user.userName}"></h2>
+
+<h3>Products Bought</h3>
+<table>
+    <thead>
+    <tr>
+        <th>Product Name</th>
+        <th>Purchased Date</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="product : ${boughtProducts}">
+        <td th:text="${product.name}"></td>
+        <td th:text="${product.datePurchased}"></td>
+    </tr>
+    </tbody>
+</table>
+
+<h3>Products Sold</h3>
+<table>
+    <thead>
+    <tr>
+        <th>Product Name</th>
+        <th>Sold Date</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="product : ${soldProducts}">
+        <td th:text="${product.name}"></td>
+        <td th:text="${product.dateSold}"></td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

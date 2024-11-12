@@ -1,6 +1,8 @@
 package com.example.marketplace.marketplace.Controllers;
 
+import com.example.marketplace.marketplace.Models.Product;
 import com.example.marketplace.marketplace.Models.User;
+import com.example.marketplace.marketplace.Repos.UserRepository;
 import com.example.marketplace.marketplace.Services.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,6 +17,8 @@ import java.util.List;
 public class AdminController {
     @Autowired
     private CustomerService customerService;
+    @Autowired
+    private UserRepository userRepository;
 
     @GetMapping("/admin/dashboard")
     public String showAdminDashboard(Model model) {
@@ -29,4 +33,17 @@ public class AdminController {
         return "redirect:/admin/dashboard";  // Redirect back to the dashboard after deletion
     }
 
+    @GetMapping("/admin/user/{userId}/activities")
+    public String showUserActivities(@PathVariable Long userId, Model model) {
+        User user = this.userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
+
+        List<Product> boughtProducts = this.customerService.findBoughtProductsByUser(user);
+        List<Product> soldProducts = this.customerService.findSoldProductsByUser(user);
+
+        model.addAttribute("user", user);
+        model.addAttribute("boughtProducts", boughtProducts);
+        model.addAttribute("soldProducts", soldProducts);
+
+        return "user_activity";  // Renders the user_activity.html template
+    }
 }

@@ -3,6 +3,7 @@ package com.example.marketplace.marketplace.Controllers;
 import com.example.marketplace.marketplace.Models.Product;
 import com.example.marketplace.marketplace.Models.User;
 import com.example.marketplace.marketplace.Repos.ProductRepository;
+import com.example.marketplace.marketplace.Services.ActivityLogService;
 import com.example.marketplace.marketplace.Services.CustomerService;
 import com.example.marketplace.marketplace.Services.FileStorageService;
 import com.example.marketplace.marketplace.Services.ProductService;
@@ -20,13 +21,16 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class ProductController {
     @Autowired
     private final ProductService productService;
+    @Autowired
+    private final ActivityLogService activityLogService;
     private final CustomerService customerService;
     private final FileStorageService fileStorageService;
     @Autowired
     private final ProductRepository productRepository;
 
-    public ProductController(ProductService productService, CustomerService customerService, FileStorageService fileStorageService, ProductRepository productRepository) {
+    public ProductController(ProductService productService, ActivityLogService activityLogService, CustomerService customerService, FileStorageService fileStorageService, ProductRepository productRepository) {
         this.productService = productService;
+        this.activityLogService = activityLogService;
         this.customerService = customerService;
         this.fileStorageService = fileStorageService;
         this.productRepository = productRepository;
@@ -55,14 +59,21 @@ public class ProductController {
         return "redirect:/";
     }
 
-    @GetMapping("/product/{id}")
-    public String getProductDetails(@PathVariable Long id, Model model) {
-        Product product = this.productService.findProductById(id);
-        if (product == null) {
-            return "redirect:/"; // Handle product not found case
-        }
-        model.addAttribute("product", product);
-        return "product-details";
-    }
+//    @GetMapping("/product/{id}")
+//    public String getProductDetails(@PathVariable Long id, Model model, @AuthenticationPrincipal UserDetails userDetails) {
+//        Product product = this.productService.findProductById(id);
+//        if (product == null) {
+//            return "redirect:/"; // Handle product not found case
+//        }
+//        model.addAttribute("product", product);
+//
+//        // Log view activity
+//        User user = this.customerService.findByUsername(userDetails.getUsername());
+//
+//        this.activityLogService.logActivity(user, "Viewed product with ID: " + id);
+//
+//        return "productsHtml";
+//    }
+
 
 }

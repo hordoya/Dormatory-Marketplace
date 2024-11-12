@@ -17,11 +17,12 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     private NotificationService notificationService;
 
+    @Autowired
+    private ActivityLogService activityLogService;
 
     @Override
     public void placeOrder(User buyer, List<CartItem> cartItems) {
         Order order = new Order();
-
         order.setBuyer(buyer);
         order.setOrderDate(LocalDateTime.now());
         order.setStatus("Placed");
@@ -33,23 +34,19 @@ public class OrderServiceImpl implements OrderService {
             orderItem.setQuantity(cartItem.getQuantity());
             orderItems.add(orderItem);
 
-            // Create a new transaction for each notification
-            Transaction sellerTransaction = new Transaction();
-            Transaction buyerTransaction = new Transaction();
-
-            // Send notification to the seller
+            // Send notifications
             User seller = cartItem.getProduct().getSeller();
             String sellerMessage = "Your product '" + cartItem.getProduct().getName() + "' has been ordered.";
-            this.notificationService.sendNotification(seller, sellerMessage, sellerTransaction);
+            this.notificationService.sendNotification(seller, sellerMessage, new Transaction());
 
-            // Send notification to the buyer
             String buyerMessage = "You have successfully ordered the product '" + cartItem.getProduct().getName() + "'.";
-            this.notificationService.sendNotification(buyer, buyerMessage, buyerTransaction);
+            this.notificationService.sendNotification(buyer, buyerMessage, new Transaction());
         }
 
         order.setOrderItems(orderItems);
         this.orderRepository.save(order);
+
+        // Log order activity
+        this.activityLogService.logActivity(buyer, "Placed an order with ID: " + order.getId());
     }
-
-
 }

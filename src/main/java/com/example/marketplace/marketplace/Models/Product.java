@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Data
@@ -26,8 +27,10 @@ public class Product {
     private String tags;
     private Boolean available = true;
     private String photoUrl;
-    private String buyer;
+
     private boolean deleted = false;
+    private LocalDate datePurchased;
+    private LocalDate dateSold;
 
 
     @ManyToOne
@@ -49,11 +52,19 @@ public class Product {
         this.discount = discount;
         this.photoUrl = photoUrl;
         this.available = available;
-        this.buyer = buyer;
+
 
     }
 
     private boolean inCart;
+    @ManyToOne
+    @JoinColumn(name = "buyer_id")
+    private User buyer;
+
+    // Many products can be sold by one user
+    @ManyToOne
+    @JoinColumn(name = "seller_id")
+    private User seller;
 
     // Getter and setter for inCart
     public boolean isInCart() {

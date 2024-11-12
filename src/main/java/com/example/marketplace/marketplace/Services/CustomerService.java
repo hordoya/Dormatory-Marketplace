@@ -1,5 +1,6 @@
 package com.example.marketplace.marketplace.Services;
 
+import com.example.marketplace.marketplace.Models.Product;
 import com.example.marketplace.marketplace.Models.User;
 import com.example.marketplace.marketplace.Models.UserDTO;
 
@@ -18,4 +19,8 @@ public interface CustomerService {
     User findById(Long userId);
 
     void deleteUserById(Long id);
+
+    public List<Product> findBoughtProductsByUser(User user);
+
+    public List<Product> findSoldProductsByUser(User user);
 }

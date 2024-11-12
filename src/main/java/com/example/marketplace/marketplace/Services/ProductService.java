@@ -22,4 +22,6 @@ public interface ProductService {
     List<Product> findAllActiveProducts();
 
     void placeOrderAndDeleteProducts(List<Long> productIds);
+
+
 }

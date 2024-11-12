@@ -1,7 +1,9 @@
 package com.example.marketplace.marketplace.Services;
 
+import com.example.marketplace.marketplace.Models.Product;
 import com.example.marketplace.marketplace.Models.User;
 import com.example.marketplace.marketplace.Models.UserDTO;
+import com.example.marketplace.marketplace.Repos.ProductRepository;
 import com.example.marketplace.marketplace.Repos.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,6 +20,9 @@ public class CustomerServiceImpl implements CustomerService, UserDetailsService 
     @Autowired
     private UserRepository userRepository;
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private ProductRepository productRepository;
+
 
     public CustomerServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
@@ -77,5 +82,13 @@ public class CustomerServiceImpl implements CustomerService, UserDetailsService 
         this.userRepository.deleteById(id);
     }
 
+    @Override
+    public List<Product> findBoughtProductsByUser(User user) {
+        return this.productRepository.findByBuyer(user);
+    }
 
+    @Override
+    public List<Product> findSoldProductsByUser(User user) {
+        return this.productRepository.findBySeller(user);
+    }
 }

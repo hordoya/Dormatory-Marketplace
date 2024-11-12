@@ -113,6 +113,14 @@ public class User implements UserDetails {
         return this.address = address;
     }
 
+    //new added
+    @OneToMany(mappedBy = "buyer")
+    private List<Product> boughtProducts;
+
+    // List of products sold by the user
+    @OneToMany(mappedBy = "seller")
+    private List<Product> soldProducts;
+
     public void setCart(Cart cart) {
         this.cart = cart;
     }
