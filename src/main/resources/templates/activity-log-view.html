@@ -9,6 +9,7 @@
     <thead>
     <tr>
         <th>User</th>
+        <th>Seller</th>
         <th>Action</th>
         <th>Timestamp</th>
     </tr>
@@ -16,6 +17,7 @@
     <tbody>
     <tr th:each="log : ${logs}">
         <td th:text="${log.user.userName}">User Name</td>
+        <td th:text="${log.seller != null ? log.seller.userName : 'N/A'}">Seller Name</td>
         <td th:text="${log.action}">Action</td>
         <td th:text="${log.timestamp}">Timestamp</td>
     </tr>

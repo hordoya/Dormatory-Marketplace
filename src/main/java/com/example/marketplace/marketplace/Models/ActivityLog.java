@@ -20,7 +20,11 @@ public class ActivityLog {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private User user;
+    private User user; // The user performing the action
+
+    @ManyToOne
+    @JoinColumn(name = "seller_id")
+    private User seller; // The seller involved in the activity, if applicable
 
     public void setUser(User user) {
         this.user = user;
@@ -30,11 +34,12 @@ public class ActivityLog {
         this.action = action;
     }
 
-    public void setTimestamp(LocalDateTime timestamp) {
-        this.timestamp = timestamp;
-
+    public void setTimestamp(LocalDateTime now) {
+        this.timestamp = now;
     }
 
-
-    // Constructor, getters, and setters
+    public void setSeller(User seller) {
+        this.seller = seller;
+    }
 }
+

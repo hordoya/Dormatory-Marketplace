@@ -15,13 +15,15 @@ public class ActivityLogServiceImpl implements ActivityLogService {
     @Autowired
     private ActivityLogRepository activityLogRepository;
 
-    public void logActivity(User user, String action) {
+    public void logActivity(User user, String action, User seller) {
         ActivityLog log = new ActivityLog();
         log.setUser(user);
         log.setAction(action);
         log.setTimestamp(LocalDateTime.now());
+        log.setSeller(seller);
         this.activityLogRepository.save(log);
     }
+
 
     @Override
     public List<ActivityLog> getAllLogs() {

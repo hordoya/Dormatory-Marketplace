@@ -41,12 +41,16 @@ public class OrderServiceImpl implements OrderService {
 
             String buyerMessage = "You have successfully ordered the product '" + cartItem.getProduct().getName() + "'.";
             this.notificationService.sendNotification(buyer, buyerMessage, new Transaction());
+
+            // Log activity for the buyer and include the seller
+            this.activityLogService.logActivity(buyer, "Ordered product '" + cartItem.getProduct().getName() + "'.", seller);
         }
 
         order.setOrderItems(orderItems);
         this.orderRepository.save(order);
 
-        // Log order activity
-        this.activityLogService.logActivity(buyer, "Placed an order with ID: " + order.getId());
+        // Additional log for the order itself
+        this.activityLogService.logActivity(buyer, "Placed an order with ID: " + order.getId(), null);
     }
+
 }
